@@ -17,7 +17,7 @@ export default (state=initialState, action) => {
     } else if (action.type === TOGGLE_MODAL) {
         return Object.assign({}, state, {showInfoModal: !state.showInfoModal});
     } else if (action.type === MAKE_GUESS) {
-        return Object.assign({}, state, {guesses: [...state.guess, action.guess]})
+        return Object.assign({}, state, {guesses: [...state.guesses, action.guess]});
     }
     return state;
 };
