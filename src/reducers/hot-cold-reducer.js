@@ -1,8 +1,5 @@
-import {NEW_GAME} from '../actions/newGame';
-import {TOGGLE_MODAL} from '../actions/toggleModal';
-import {MAKE_GUESS} from '../actions/makeGuess';
-
-import {combineReducers} from 'redux';
+import {NEW_GAME, TOGGLE_MODAL, MAKE_GUESS} from '../actions';
+// import {newGame, toggleModal, makeGuess} from '../actions';
 
 const initialState = {
     guesses: [],
@@ -11,16 +8,23 @@ const initialState = {
     showInfoModal: false
 };
 
-export default (state=initialState, action) => {
+const hotColdReducer = (state=initialState, action) => {
     if (action.type === NEW_GAME) {
         return Object.assign({}, initialState, {correctAnswer: Math.floor(Math.random() * 100) + 1});
     } else if (action.type === TOGGLE_MODAL) {
         return Object.assign({}, state, {showInfoModal: !state.showInfoModal});
     } else if (action.type === MAKE_GUESS) {
 
+      let feedback;
+      action.guess = parseInt(action.guess, 10);
+      if (isNaN(action.guess)) {
+        feedback = 'Please enter a valid number'
+        return Object.assign({}, state, {feedback});
+      }
+
       const difference = Math.abs(action.guess - state.correctAnswer);
 
-      let feedback;
+
       if (difference >= 50) {
           feedback = 'You\'re Ice Cold...';
       }
@@ -40,3 +44,5 @@ export default (state=initialState, action) => {
     }
     return state;
 };
+
+export default hotColdReducer;
