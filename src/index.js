@@ -2,6 +2,7 @@ import './reset.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {createStore} from 'redux';
+import {Provider} from 'react-redux';
 
 import './reset.css';
 import './index.css';
@@ -15,12 +16,11 @@ import {makeGuess} from './actions/makeGuess';
 import reducer from './reducers/index.js';
 
 const store = createStore(reducer);
-console.log(store.getState());
-store.dispatch(makeGuess(5));
-console.log(store.getState());
 
 ReactDOM.render(
-    <Game />,
+    <Provider store={store}>
+        <Game />
+    </Provider>,
     document.getElementById('root')
 );
 
